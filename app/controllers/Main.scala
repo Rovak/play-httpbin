@@ -13,4 +13,8 @@ object Main extends Controller {
     Ok(Json.obj("user-agent" -> request.headers.get("User-Agent")))
   }
 
+  def headers = Action { request =>
+    Ok(Json.obj("headers" -> request.headers.toSimpleMap))
+  }
+
 }
