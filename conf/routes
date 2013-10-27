@@ -11,6 +11,12 @@ PUT     /put                        controllers.Main.post
 PATCH   /patch                      controllers.Main.post
 DELETE  /delete                     controllers.Main.post
 GET     /status/:status             controllers.Main.status(status: Int)
+GET     /redirect/:count            controllers.Main.redirect(count: Int)
+GET     /redirect-to                controllers.Main.redirectTo
+GET     /cookies                    controllers.Main.cookies
+GET     /cookies/set                controllers.Main.setCookies
+GET     /cookies/delete             controllers.Main.deleteCookies
+GET     /stream/:count              controllers.Main.stream(count: Int)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

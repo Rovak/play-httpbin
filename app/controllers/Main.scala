@@ -49,4 +49,31 @@ object Main extends Controller {
     Status(status)
   }
 
+  def redirect(count: Int) = Action {
+    if (count > 1) Redirect(routes.Main.redirect(count - 1))
+    else Redirect(routes.Main.get())
+  }
+
+  def redirectTo = Action { request =>
+    request.queryString.get("url").map(x => Redirect(x.mkString(""))).getOrElse(Redirect(routes.Main.get()))
+  }
+
+  def cookies = Action { request =>
+    Ok(Json.obj("cookies" -> request.cookies.foldLeft(Json.obj())((result, current) => result ++ Json.obj(current.name -> current.value))))
+  }
+
+  def setCookies = Action { request =>
+    val newCookies = request.queryString.map(x => Cookie(x._1, x._2.mkString("")))
+    Redirect(routes.Main.cookies()).withCookies(newCookies.toSeq:_*)
+  }
+
+  def deleteCookies = Action { request =>
+    val removeCookies = request.queryString.map(x => DiscardingCookie(x._1))
+    Redirect(routes.Main.cookies()).discardingCookies(removeCookies.toSeq:_*)
+  }
+
+  def stream(count: Int) = Action { request =>
+    val total = if (count > 1000) 1000 else count
+    Ok((1 to total).map(x => Json.stringify(Json.obj("origin" -> request.remoteAddress))).mkString("\n"))
+  }
 }
