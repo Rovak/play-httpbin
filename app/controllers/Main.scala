@@ -5,6 +5,8 @@ import play.api.libs.json.Json
 
 object Main extends Controller {
 
+
+
   def ip = Action { request =>
     Ok(Json.obj("origin" -> request.remoteAddress))
   }
@@ -15,6 +17,12 @@ object Main extends Controller {
 
   def headers = Action { request =>
     Ok(Json.obj("headers" -> request.headers.toSimpleMap))
+  }
+
+  def get = Action { request =>
+    val headers = Json.obj("headers" -> request.headers.toSimpleMap)
+    val get     = Json.obj("args"    -> request.queryString.map(x => (x._1, x._2.mkString(""))))
+    Ok(headers ++ get)
   }
 
 }
