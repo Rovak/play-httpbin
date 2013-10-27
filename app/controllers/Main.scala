@@ -45,4 +45,8 @@ object Main extends Controller {
     Ok(json ++ form ++ headers ++ get ++ formData)
   }
 
+  def status(status: Int) = Action {
+    Status(status)
+  }
+
 }
