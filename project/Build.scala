@@ -14,7 +14,11 @@ object Build extends Build {
 
   )
 
-  lazy val main = play.Project(appName, appVersion)
+  lazy val main = play.Project(appName, appVersion).settings(
+    libraryDependencies ++= Seq(
+      Dependencies.Apache.lang
+    )
+  )
 
 
   object Dependencies {

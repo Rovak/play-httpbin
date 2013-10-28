@@ -2,6 +2,8 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+GET     /                           controllers.Main.index
+
 GET     /ip                         controllers.Main.ip
 GET     /user-agent                 controllers.Main.useragent
 GET     /headers                    controllers.Main.headers
@@ -17,6 +19,18 @@ GET     /cookies                    controllers.Main.cookies
 GET     /cookies/set                controllers.Main.setCookies
 GET     /cookies/delete             controllers.Main.deleteCookies
 GET     /stream/:count              controllers.Main.stream(count: Int)
+
+# Monitor
+GET     /monitor                    controllers.Monitor.index
+GET     /monitor/:id                controllers.Monitor.view(id)
+
+GET     /stream                     controllers.Monitor.viewConnection
+
+GET     /listen/:id                 controllers.Monitor.listener(id)
+PUT     /listen/:id                 controllers.Monitor.listener(id)
+DELETE  /listen/:id                 controllers.Monitor.listener(id)
+PATCH   /listen/:id                 controllers.Monitor.listener(id)
+POST    /listen/:id                 controllers.Monitor.listener(id)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

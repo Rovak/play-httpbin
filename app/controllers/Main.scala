@@ -5,6 +5,10 @@ import play.api.libs.json.{JsObject, JsNull, Json}
 
 object Main extends Controller {
 
+  def index = Action {
+    Ok("Index")
+  }
+
   def ip = Action { request =>
     Ok(Json.obj("origin" -> request.remoteAddress))
   }

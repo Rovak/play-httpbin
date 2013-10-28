@@ -1,0 +1,15 @@
+@(session: actors.Session)(implicit request: play.api.mvc.Request[AnyContent])
+
+@main("Viewer") {
+    <h1>Viewer</h1>
+    <script type="text/javascript">
+        var config = {
+            liveUrl: '@controllers.routes.Monitor.viewConnection.webSocketURL()?id=@session.id',
+            baseUrl: '@controllers.routes.Main.index.absoluteURL()',
+            sessionId: '@session.id'
+        };
+    </script>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="@routes.Assets.at("js/viewer.js")"></script>
+    <div class="results"></div>
+}
