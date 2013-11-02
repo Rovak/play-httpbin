@@ -8,7 +8,6 @@ App.RequestModel = Ember.Object.extend
   name: ''
   id: 0
 
-
 App.IndexRoute = Ember.Route.extend
   activate: (controller) ->
     $('.top-bg').animate
@@ -40,7 +39,7 @@ App.MonitorController = Ember.ArrayController.extend
 
     Ember.$.getJSON config.baseUrl + "monitor/request", (data) ->
       if data.success
-        websocket = new WebSocket config.liveUrl + "?id=" + data.session
+        me.websocket = websocket = new WebSocket config.liveUrl + "?id=" + data.session
         me.set 'sessionid', data.session
 
         websocket.onopen = (ev) ->
@@ -56,17 +55,15 @@ App.MonitorController = Ember.ArrayController.extend
         @return {Unit}
         ###
         websocket.onmessage = (ev) ->
-            data = JSON.parse ev.data
-            console.log me, data
+          data = JSON.parse ev.data
+          console.log me, data
 
-            me.set 'requestContent', data.content
+          me.set 'requestContent', data.content
 
-            me.pushObject
-              name: 'test'
+          me.pushObject
+            name: 'test'
 
-            me.set 'content', []
-
-        me.websocket = websocket
+          me.set 'content', []
 
 App.RequestRoute = Ember.Route.extend
   model: (params) ->
