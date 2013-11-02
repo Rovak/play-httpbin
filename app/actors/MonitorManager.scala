@@ -40,11 +40,12 @@ class MonitorManager extends Actor {
   def receive = {
     case RequestSession() => sender ! requestSession()
     case GetSession(id)   => sender ! sessions.get(id).getOrElse(SessionNotFound())
-    case BroadcastRequest(session, body) =>
+    case BroadcastRequest(session, request) =>
       sessions.get(session.id) map { found =>
-        val result = body.asJson.map { json =>
-            Json.obj("content" -> Json.stringify(json))
-        }.getOrElse(Json.obj("content" -> "nothing"))
+        val result = Json.obj(
+          "content" -> request.body,
+          "headers" -> request.headers,
+          "contentType" -> request.contentType)
         found.channel.push(result)
     }
   }
@@ -83,4 +84,5 @@ case class RequestSession()
 case class GetSession(id: String)
 case class SessionNotFound()
 case class Session(id: String, enumerator: Enumerator[JsValue], channel: Concurrent.Channel[JsValue])
-case class BroadcastRequest(session: Session, body: AnyContent)
+case class BroadcastRequest(session: Session, body: IncomingRequest)
+case class IncomingRequest(body: String, headers: Map[String, String], contentType: String)
