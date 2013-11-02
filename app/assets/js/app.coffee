@@ -31,7 +31,7 @@ App.MonitorRoute = Ember.Route.extend
 App.MonitorController = Ember.ArrayController.extend
 
   init: ->
-    me = this;
+    me = this
     this.set 'content', []
 
     this.pushObject
