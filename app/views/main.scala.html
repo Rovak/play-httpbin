@@ -1,4 +1,4 @@
-@(title: String)(content: Html)
+@(title: String)(content: Html)(implicit request: play.api.mvc.Request[AnyContent])
 
 <!DOCTYPE html>
 
@@ -7,7 +7,17 @@
         <title>@title</title>
         <link rel="stylesheet" href="@routes.Assets.at("css/bootstrap.css")">
         <link rel="stylesheet" href="@routes.Assets.at("css/screen.css")">
-        <script src="@routes.Assets.at("js/bootstrap.min.js")"></script>
+        <script type="text/javascript">
+            var config = {
+                liveUrl: '@controllers.routes.Monitor.viewConnection.webSocketURL()',
+                baseUrl: '@controllers.routes.Main.index.absoluteURL()'
+            };
+        </script>
+        <script src="@routes.Assets.at("libs/jquery-1.9.1.js")"></script>
+        <script src="@routes.Assets.at("libs/handlebars-1.0.0.js")"></script>
+        <script src="@routes.Assets.at("libs/ember-1.1.2.js")"></script>
+        <script src="@routes.Assets.at("libs/ember-data.js")"></script>
+        <script src="@routes.Assets.at("js/app.js")"></script>
     </head>
     <body>
         @content

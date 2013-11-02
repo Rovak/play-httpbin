@@ -5,7 +5,7 @@ import play.api.libs.json.{JsObject, JsNull, Json}
 
 object Main extends Controller {
 
-  def index = Action {
+  def index = Action { implicit request =>
     Ok(views.html.home())
   }
 

@@ -1,14 +1,16 @@
-@()
+@()(implicit request: play.api.mvc.Request[AnyContent])
 
 @main("Home") {
+
+  <script type="text/x-handlebars">
     <div class="row top-bg">
         <div class="col-xs-12" style="color: #FFF; margin: 25px;">
-            Start
+            {{#link-to 'index'}}Start{{/link-to}}
         </div>
         <div class="start">
             <h1>Request Bin</h1>
             <br>
-            <a href="@controllers.routes.Monitor.index()" class="btn btn-success btn-lg">Start Request bin</a>
+            {{#link-to 'monitor'}}Start Request bin{{/link-to}}
             <br>
             <br>
             <p>
@@ -17,19 +19,32 @@
             </p>
         </div>
     </div>
+
+    {{outlet}}
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="index">
+
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="monitor">
+
     <div class="row">
         <div class="col-xs-2 request-menu">
             <ul class="list-unstyled">
-                <li>Dit is een test</li>
-                <li>Dit is een test</li>
-                <li>Dit is een test</li>
-                <li>Dit is een test</li>
-                <li>Dit is een test</li>
+                {{#each}}
+                    <li>{{#link-to 'request' this}}{{name}}{{/link-to}}</li>
+                {{/each}}
             </ul>
         </div>
         <div class="col-xs-10">
-            Body!
+            <h1>{{sessionid}}</h1>
+            {{requestContent}}
         </div>
 
     </div>
+
+  </script>
+
+
 }

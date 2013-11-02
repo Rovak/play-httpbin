@@ -22,6 +22,7 @@ GET     /stream/:count              controllers.Main.stream(count: Int)
 
 # Monitor
 GET     /monitor                    controllers.Monitor.index
+GET     /monitor/request            controllers.Monitor.request
 GET     /monitor/:id                controllers.Monitor.view(id)
 
 GET     /stream                     controllers.Monitor.viewConnection
