@@ -1,0 +1,35 @@
+@()
+
+@main("Home") {
+    <div class="row top-bg">
+        <div class="col-xs-12" style="color: #FFF; margin: 25px;">
+            Start
+        </div>
+        <div class="start">
+            <h1>Request Bin</h1>
+            <br>
+            <a href="@controllers.routes.Monitor.index()" class="btn btn-success btn-lg">Start Request bin</a>
+            <br>
+            <br>
+            <p>
+                RequestBin gives you a URL that will collect requests made to it and let you inspect them in a human-friendly way.<br>
+                Use RequestBin to see what your HTTP client is sending or to inspect and debug webhook requests.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-2 request-menu">
+            <ul class="list-unstyled">
+                <li>Dit is een test</li>
+                <li>Dit is een test</li>
+                <li>Dit is een test</li>
+                <li>Dit is een test</li>
+                <li>Dit is een test</li>
+            </ul>
+        </div>
+        <div class="col-xs-10">
+            Body!
+        </div>
+
+    </div>
+}

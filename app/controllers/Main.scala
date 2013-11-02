@@ -6,7 +6,7 @@ import play.api.libs.json.{JsObject, JsNull, Json}
 object Main extends Controller {
 
   def index = Action {
-    Ok("Index")
+    Ok(views.html.home())
   }
 
   def ip = Action { request =>
