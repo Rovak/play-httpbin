@@ -30,15 +30,6 @@ object Monitor extends Controller {
 
   val manager = MonitorManager.actor
 
-  def index = Action.async { implicit request =>
-    manager ? RequestSession() map {
-      case Session(id, enum, channel) =>
-        Redirect(routes.Monitor.view(id))
-      case x =>
-        NotFound("no session found")
-    }
-  }
-
   /**
    * Request a session id
    * @return
@@ -49,21 +40,6 @@ object Monitor extends Controller {
         Ok(Json.obj("success" -> true, "session" -> id))
       case x =>
         Ok(Json.obj("success" -> false))
-    }
-  }
-
-  /**
-   * Monitor viewer
-   *
-   * @param id
-   * @return
-   */
-  def view(id: String) = Action.async { implicit request =>
-    manager ? GetSession(id) map {
-      case session @ Session(sessionId, enumerator, channel) =>
-        Ok(views.html.viewer(session))
-      case x =>
-        NotFound("no session found")
     }
   }
 
