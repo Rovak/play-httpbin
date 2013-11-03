@@ -4,23 +4,25 @@ App.Router.map () ->
   this.resource 'monitor', ->
     this.resource 'request', path: '/:request_id'
 
-App.RequestModel = Ember.Object.extend
-  name: ''
-  id: 0
+#App.Requests = Ember.MutableArray.create()
 
+App.RequestModel = DS.Model.extend
+  body: DS.attr()
+  headers: DS.attr()
+
+App.RequestId = 1
+
+# Index
 App.IndexRoute = Ember.Route.extend
   activate: (controller) ->
     $('.top-bg').animate
       height: 500
     $('.start').fadeIn()
-  model: ->
-    ['red', 'yellow', 'blue']
 
 App.IndexController = Ember.Controller.extend
   setupController: (controller) ->
 
-
-
+# Monitor
 App.MonitorRoute = Ember.Route.extend
   activate: (controller) ->
     $('.top-bg').animate
@@ -30,17 +32,21 @@ App.MonitorRoute = Ember.Route.extend
 
 App.MonitorController = Ember.ArrayController.extend
 
+  content: []
+
+  sortProperties: ['id']
+  sortAscending: false
+
   init: ->
-    me = this
-    @set 'content', []
+    @._super()
+    self = @
 
-    @pushObject
-      name: 'test'
+    content = @get 'content'
 
-    Ember.$.getJSON config.baseUrl + "monitor/request", (data) ->
+    $.getJSON config.baseUrl + "monitor/request", (data) ->
       if data.success
-        me.websocket = websocket = new WebSocket config.liveUrl + "?id=" + data.session
-        me.set 'sessionid', data.session
+        self.websocket = websocket = new WebSocket config.liveUrl + "?id=" + data.session
+        self.set 'sessionid', data.session
 
         websocket.onopen = (ev) ->
 
@@ -56,17 +62,22 @@ App.MonitorController = Ember.ArrayController.extend
         ###
         websocket.onmessage = (ev) ->
           data = JSON.parse ev.data
-          console.log me, data
+          store = self.get 'store'
 
-          me.set 'requestContent', data.content
+          data.id = ++App.RequestId
+          data.name = "Request " + data.id
+          data.headers = for key, value of data.headers
+            name: key, value: value
 
-          me.pushObject
-            name: 'test'
+          self.pushObject data
+          store.push 'request', data
 
-          me.set 'content', []
-
+# Request
 App.RequestRoute = Ember.Route.extend
   model: (params) ->
     store = @get 'store'
+    request = store.find 'request', params.request_id
+    request
 
-#App.RequestController = Ember.Route.extend
+
+window.App = App
