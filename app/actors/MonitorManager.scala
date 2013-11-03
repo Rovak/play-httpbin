@@ -43,7 +43,7 @@ class MonitorManager extends Actor {
     case BroadcastRequest(session, request) =>
       sessions.get(session.id) map { found =>
         val result = Json.obj(
-          "content" -> request.body,
+          "body" -> request.body,
           "headers" -> request.headers,
           "contentType" -> request.contentType)
         found.channel.push(result)
