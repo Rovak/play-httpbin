@@ -38,12 +38,28 @@
             </ul>
         </div>
         <div class="col-xs-10">
-            <h1>{{sessionid}}</h1>
-            {{requestContent}}
+            <div class="row">
+                <h1>{{sessionid}}</h1>
+                <a href="/listen/{{unbound sessionid}}" target="_blank">Listener</a>
+            </div>
+            <div class="row">
+                {{outlet}}
+            </div>
         </div>
 
     </div>
 
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="request">
+    <div style="border: 1px solid #000; padding: 10px;">
+        {{#each headers}}
+            {{name}} {{value}} <br>
+        {{/each}}
+    </div>
+    <div style="border: 1px solid #000; padding: 10px;">
+        {{body}}
+    </div>
   </script>
 
 
