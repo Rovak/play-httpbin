@@ -22,7 +22,7 @@ App.IndexController = Ember.Controller.extend
 
 
 App.MonitorRoute = Ember.Route.extend
-	activate: (controller) ->
+  activate: (controller) ->
     $('.top-bg').animate
       height: 200
 
