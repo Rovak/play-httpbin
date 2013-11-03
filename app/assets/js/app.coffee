@@ -32,9 +32,9 @@ App.MonitorController = Ember.ArrayController.extend
 
   init: ->
     me = this
-    this.set 'content', []
+    @set 'content', []
 
-    this.pushObject
+    @pushObject
       name: 'test'
 
     Ember.$.getJSON config.baseUrl + "monitor/request", (data) ->
@@ -67,6 +67,6 @@ App.MonitorController = Ember.ArrayController.extend
 
 App.RequestRoute = Ember.Route.extend
   model: (params) ->
-    store = this.get 'store'
+    store = @get 'store'
 
 #App.RequestController = Ember.Route.extend
